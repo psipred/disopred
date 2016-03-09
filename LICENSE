@@ -1,0 +1,85 @@
+PLEASE READ THE FOLLOWING LICENSE AGREEMENT. BY USING THE PROGRAM YOU ARE
+ACKNOWLEDGING THE FACT THAT YOU AGREE TO THE TERMS OUTLINED IN THIS
+AGREEMENT. USERS WISHING TO USE THE SOFTWARE FOR COMMERCIAL ACTIVITIES
+SHOULD SEND E-MAIL TO: enquiries@ebisu.co.uk
+
+
+   DISOPRED3 - PROTEIN INTRINSIC DISORDER PREDICTION PROGRAM BY 
+                      D.T. JONES, D. COZZETTO & J.J. WARD
+----------------------------------------------------------------------
+
+                         GENERAL LICENSE &
+                         -----------------
+
+		     CONFIDENTIALITY AGREEMENT
+		     -------------------------
+
+
+
+In regard to the protein structure prediction program (DISOPRED3)
+herewith (the Software) the copyright and other intellectual property
+rights to which belong to the Author(s) (the Copyright holder).
+
+Any user (the User) of the program undertakes to the Copyright holder that 
+heor she shall be bound by the following terms and conditions:
+
+1. The User will receive the Software and any related documentation in
+confidence and will not use the same except for the purpose of their own 
+research. The Software will be used only by such of the User's officers or
+employees to whom it must reasonably be communicated to enable them to
+undertake their research and who agree to be bound by the same confidence.
+The User shall procure and enforce such agreement from his or her staff for
+the benefit of the Copyright holder.
+
+2. The publication of research using the Software must include an
+appropriate citation to the method:
+
+Jones, D.T. and Cozzetto, D. (2014) DISOPRED3: Precise disordered region
+predictions with annotated protein binding acrivity, Bioinformatics.
+doi:10.1093/bioinformatics/btu744
+ 
+3. All forms of the Software will be kept in a reasonably secure place to
+prevent unauthorised access.
+
+4. Each copy of the Software or, if not practicable then, any package
+associated therewith shall be suitably marked (and such marking maintained) 
+with the following copyright notice:
+"Copyright 2014 UNIVERSITY COLLEGE LONDON. Ward. All Rights Reserved.".
+
+5. The Software may be modified, but any changes made shall be communicated
+to the Author(s) and made freely available.
+
+6. The Software may not be used for commercial activities, sold as a standalone package,
+or incorporated into a commercial software package without the written permission of the 
+Copyright holder. The Software may be used freely for academic research and teaching
+purposes.
+
+7. Users may not incorporate the output of the software into any data banks or
+databases which are subject to the payment of access or license fees without the written
+permission of the Copyright holder.
+
+8. The Software may be made available to other academic users over a local network or
+wide area network (including the Internet). Incorporation of the Software into any kind of
+commercial Web site or other fee paying service is forbidden without the written
+permission of the Copyright holder. If DISOPRED results are returned to the user via
+such a network service, then a suitable acknowledgement of the DISOPRED method must be
+returned somewhere in the output text.
+
+9. The confidentiality obligation in paragraph one shall not apply:
+
+   (i)  to information and data known to the User at the time of
+	receipt here under (as evidenced by its written records);
+
+  (ii)	to information and data which was at the time of receipt in the 
+	public domain or thereafter becomes so through no wrongful act of
+	the User;
+
+ (iii)	to information and data which the User receives from a third
+	party not in breach of any obligation of confidentiality owed to
+	the Author(s).
+
+10. The User understands that the Software is supplied "as is". No warranty
+   as to its fitness or suitability for any purpose whatsoever is made or
+   implied. In no event shall the Author(s) or Copyright holder be held
+   responsible for any direct or indirect damages arising through the use
+   of the Software.

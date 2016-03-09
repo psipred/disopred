@@ -1,0 +1,170 @@
+DISOPRED RELEASE NOTES
+======================
+
+DISOPRED Version 3.1
+
+Copyright 2014 D. Jones, D. Cozzetto & J. Ward. All Rights Reserved.
+
+Here are some brief notes on using the DISOPRED 3.1 software.
+
+Please see the LICENSE file for the license terms for the software.
+Basically it is free to academic users as long as you don't want to sell
+the software or, for example, store the results obtained with it in a
+database and then try to sell the database. If you do wish to sell the
+software or use it commercially, then please contact enquiries@ebisu.co.uk
+to discuss licensing terms.
+
+
+What is new in DISOPRED3
+========================
+
+DISOPRED3 represents the latest release of our successful machine-learning
+based approach to the detection of intrinsically disordered regions. The
+method was originally trained on evolutionarily conserved sequence features
+of disordered regions from missing residues in high-resolution X-ray structures.
+DISOPRED2 mainly addressed the marked class imbalance between ordered and
+disordered amino acids as well as the different sequence patterns associated
+with terminal and internal disordered regions using SVMs.
+
+DISOPRED3 extends the previous architecture with two independent predictors of
+intrinsic disorder - a neural network and a nearest neighbour classifier - which
+were trained to identify long intrinsically disordered regions using data from
+the PDB and DisProt databases. The intermediate results are integrated by an
+additional neural network.
+
+To provide insights into the biological roles of proteins, DISOPRED3 also predicts
+protein binding sites within disordered regions using a SVM that examines patterns
+of evolutionary sequence conservation, positional information and amino acid
+composition of putative disordered regions.
+
+
+Installing DISOPRED3
+====================
+
+The program is supplied in source code form - some components must be
+compiled before they can be used. On a standard Unix or Linux system,
+DISOPRED can be compiled and installed from the src/ directory with:
+
+make clean
+
+make
+
+make install
+
+The process will place the executables in the DISOPRED bin/ directory, where
+the script "run_disopred.pl" expects to find them. A copy of the svm-predict
+program from the LIBSVM package Version 3.17 is also included for the prediction
+of protein binding sites within disordered regions. Full details of LIBSVM,
+including the licence, can be found at:
+
+http://www.csie.ntu.edu.tw/~cjlin/libsvm/
+
+You will additionally need to download the disored library to a directory
+called dso_lib. From the main disopred directory run
+
+wget http://bioinfadmin.cs.ucl.ac.uk/downloads/DISOPRED/dso_lib.tar.gz
+
+tar -zxvf dso_lib.tar.gz
+
+Configuring DISOPRED3
+=====================
+
+A simple Perl script called "run_disopred.pl" allows to predict intrinsically
+disordered regions and protein binding sites within them. The script assumes
+that the NCBI BLAST binaries and appropriate sequence databases have been
+installed locally. Their location is specified through the variables:
+
+my $NCBI_DIR = "/home/bin/blast-2.2.26/bin/"; # directory where the BLAST binaries are
+my $SEQ_DB   = "/home/uniref/uniref90"; # the path to the formatdb'ed sequence database
+
+The NCBI executables can be obtained from ftp://ftp.ncbi.nih.gov/blast
+
+Suitable sequence data banks are available from ftp://ftp.ncbi.nih.gov/blast/db/
+and ftp://ftp.ebi.ac.uk/pub/databases/uniprot/
+
+********************       IMPORTANT NOTE ON BLAST+       *****************
+NCBI are encouraging users to switch over from the classic BLAST package
+to the new BLAST+ package. On the one hand this is a cleaner and nicer
+version of BLAST, but on the other hand, it omits some useful features.
+In particular, BLAST+ no longer offers the facility to extract more precise
+PSSM scores from checkpoint files in a "supported" way (i.e. using the
+makemat utility for this purpose).
+
+Eventually, we will probably switch over to BLAST+ as the preferred way of
+searching for similar sequences, but for the time being no interface to
+BLAST+ is provided.
+***************************************************************************
+
+The Perl script also expects to find the directories bin/, data/ and dso_lib/ at the same path.
+If you need to move these directories somewhere else, please change the values of the variables
+with the new full paths
+
+my $EXE_DIR = abs_path(join '/', dirname($0), "bin"); # the path of the bin directory
+my $DATA_DIR = abs_path(join '/', dirname($0),"data"); # the path of the data directory
+$ENV{DSO_LIB_PATH} = join '', abs_path("./dso_lib"), '/'; # the path of the library directory used by the nearest neighbour classifier
+
+Running DISOPRED3
+=================
+
+The script "run_disopred.pl" requires as input a text file containing one
+amino acid sequence for which predictions are sought. A few parameters can
+be tuned from inside the script, including the PSI-BLAST search options and
+the DISOPRED2 SVM specificity level. During the execution, a number of
+temporary files will be generated (e.g. PSI-BLAST output files, the PSSM file,
+the intermediate disordered residue prediction files, the input file to
+svm-predict), which are identified by concatenating the input file name, the
+process id of the Perl job and the numeric identifier for the host. These
+files are removed after the final output has been generated in the same
+directory as the input.
+
+Here is the output of a successful DISOPRED run for the file examples/example.fasta:
+
+./run_disopred.pl examples/example.fasta
+
+Running PSI-BLAST search ...
+
+Generating PSSM ...
+
+Predicting disorder with DISOPRED2 ...
+
+Running neural network classifier ...
+
+Running nearest neighbour classifier ...
+
+Combining disordered residue predictions ...
+
+Predicting protein binding residues within disordered regions ...
+
+Cleaning up ...
+
+Finished
+
+Disordered residue predictions in absolute-path/examples/example.diso
+
+Protein binding disordered residue predictions in absolute-path/examples/example.pbdat
+
+
+OUTPUT FILE FORMAT
+==================
+
+Results are saved in plain ASCII text format. Disordered region predictions are presented
+in tabular format with four fields on each line representing the amino acid position, the
+residue single letter code, the order/disorder assignment code, and the corresponding
+confidence level. Ordered residues are marked with dots (.) and have scores in [0.00, 0.49];
+disordered residues are labelled with asterisks (*) and are scored in [0.50, 1.00].
+
+Putative disordered protein binding sites are annotated in a similar way, with one row for
+each amino acid and four fields representing the sequence position, the single letter code,
+the assignment code, and the confidence level. Ordered residues are labelled with dots (.)
+and have no score associated, so the value in last field is "NA". Protein-binding disordered
+residues are indicated by carets (^) and their confidence scores are in [0.50, 1.00], while
+all other unstructured positions are tagged with dashes (-) and are scored in [0.00, 0.49].
+
+
+Citing DISOPRED3
+================
+
+Please cite:
+
+Jones, D.T. and Cozzetto, D. (2014) DISOPRED3: Precise disordered region
+predictions with annotated protein binding acrivity, Bioinformatics
