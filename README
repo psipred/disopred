@@ -66,6 +66,9 @@ wget http://bioinfadmin.cs.ucl.ac.uk/downloads/DISOPRED/dso_lib.tar.gz
 
 tar -zxvf dso_lib.tar.gz
 
+You must also set the ENVIRONMENT variable for the DSO_LIB_PATH to the path to
+newly untarred dso_lib/
+
 Configuring DISOPRED3
 =====================
 
