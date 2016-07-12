@@ -15,8 +15,8 @@ use Cwd qw(abs_path);
 
 ## IMPORTANT: Set the paths to folder with the NCBI executables and to the
 ## sequence database
-my $NCBI_DIR = "/home/bin/blast-2.2.26/bin/";
-my $SEQ_DB = "/home/uniref/uniref90";
+my $NCBI_DIR = "/scratch0/NOT_BACKED_UP/dbuchan/Applications/blast-2.2.26/bin/";
+my $SEQ_DB = "/scratch0/NOT_BACKED_UP/dbuchan/uniref/uniref_test_db/uniref_test.fasta";
 
 ## IMPORTANT: Changing these flags will alter the behaviour of blastpgp
 ## You may want to use -a n to speed-up the search using n processors, if available
@@ -259,7 +259,7 @@ sub make_vectors {
 		foreach my $el ($start..$end) {
 			push @f_values, @{$$prf[$el]}
 		}
-		
+
 		my @f_indexes = $first_label..$last_label;
 
 		# append to the scaled profile data the flag for windows exceeding the input sequence, the positional information of
@@ -343,4 +343,3 @@ sub format_protein_binding_predictions {
 	print OUT join "\n", @lines, '';
 	close OUT
 }
-
