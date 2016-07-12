@@ -73,21 +73,26 @@ my ($diso_fn, $diso2_fn, $nndiso_fn, $dnb_fn, $diso3_fn, $dat_fn, $svc_fn, $pb_f
 
 print "Predicting disorder with DISOPRED2 ...\n\n";
 $args = join ' ', "$EXE_DIR/disopred2", join('/', $out_dir, $base), $mtx_fn, "$DATA_DIR/", $DISO2_FPR, "\n";
+print $args;
 system($args) == 0 or die "[$0] ERROR: $args failed. Please report error to psipred\@cs.ucl.ac.uk\n";
 
 $args = join ' ', "mv", $diso_fn, $diso2_fn, "\n";
+print $args;
 system($args) == 0 or die "[$0] ERROR: $args failed. Please report error to psipred\@cs.ucl.ac.uk";
 
 print "Running neural network classifier ...\n\n";
 $args = join ' ', "$EXE_DIR/diso_neu_net", "$DATA_DIR/weights.dat.nmr_nonpdb", $mtx_fn, ">", $nndiso_fn, "\n";
+print $args;
 system($args) == 0 or die "[$0] ERROR: $args failed. Please report error to psipred\@cs.ucl.ac.uk";
 
 print "Running nearest neighbour classifier ...\n\n";
 $args = join ' ', "$EXE_DIR/diso_neighb", $mtx_fn, "$DATA_DIR/dso.lst", ">", $dnb_fn, "\n";
+print $args;
 system($args) == 0 or die "[$0] ERROR: $args failed. Please report error to psipred\@cs.ucl.ac.uk\n";
 
 print "Combining disordered residue predictions ...\n\n";
 $args = join ' ', "$EXE_DIR/combine", "$DATA_DIR/weights_comb.dat", $diso2_fn, $nndiso_fn, $dnb_fn, ">", $diso3_fn, "\n";
+print $args;
 system($args) == 0 or die "[$0] ERROR: $args failed. Please report error to psipred\@cs.ucl.ac.uk";
 
 my ($seq, $idr_data) = parse_disopred3_file($diso3_fn);
@@ -101,6 +106,7 @@ close DAT;
 
 print "Predicting protein binding residues within disordered regions ...\n\n";
 $args = join ' ', "$EXE_DIR/svm-predict", "-b 1 -q", $dat_fn, "$DATA_DIR/ProtBind_IDR_Model.dat", $svc_fn;
+print $args;
 system($args) == 0 or die "[$0] ERROR: $args failed. Please report error to psipred\@cs.ucl.ac.uk\n"; #system $args failed: $?\n";
 
 # merge residue level predictions of disorder and protein binding
@@ -109,7 +115,8 @@ format_protein_binding_predictions($diso3_fn, $svc_fn, $pb_fn);
 # Remove temporary files
 print "Cleaning up ...\n\n";
 $args = join ' ', "rm -f", $hits_file, $chk_file, "error.log", $mtx_fn, <$tmp_base*>, glob("$out_dir/*horiz_d"), $diso2_fn, $nndiso_fn, $dnb_fn, $dat_fn, $svc_fn, "\n";
-system($args) == 0 or die "[$0] ERROR: $args failed: $?\n";
+print $args;
+# system($args) == 0 or die "[$0] ERROR: $args failed: $?\n";
 
 print join "\n\n", "Finished", "Disordered residue predictions in $diso3_fn", "Protein binding disordered residue predictions in $pb_fn", '';
 0;
