@@ -15,14 +15,14 @@ CC       	= gcc
 CCFLAGS  	= -Wall -O
 LIBS		= -lm
 
-all:		disopred2 diso_neu_net diso_neighb combine svm-predict
+all:		chkparse disopred2 diso_neu_net diso_neighb combine svm-predict
 
 install:
 		mkdir ../bin/
-		mv -t ../bin disopred2 diso_neu_net diso_neighb combine svm-predict
+		mv -t ../bin chkparse disopred2 diso_neu_net diso_neighb combine svm-predict
 
 clean:
-		rm -f disopred2 diso_neu_net diso_neighb combine svm-predict *~
+		rm -f chkparse disopred2 diso_neu_net diso_neighb combine svm-predict *~
 		rm -rf ../bin/
 
 disopred2:	pred_dis.cpp weights.cpp
@@ -40,3 +40,5 @@ combine:	disordcomb_pred.c
 svm-predict:	svm-predict.c svm.cpp svm.h
 		$(CXX) $(CXXFLAGS) svm-predict.c svm.cpp $(LIBS) -o svm-predict
 
+chkparse:	chkparse.c
+		$(CC) $(CFLAGS) chkparse.c $(LIBS) -o chkparse
