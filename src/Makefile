@@ -41,4 +41,4 @@ svm-predict:	svm-predict.c svm.cpp svm.h
 		$(CXX) $(CXXFLAGS) svm-predict.c svm.cpp $(LIBS) -o svm-predict
 
 chkparse:	chkparse.c
-		$(CC) $(CFLAGS) chkparse.c $(LIBS) -o chkparse
+		$(CC) -O3 chkparse.c $(LIBS) -o chkparse
