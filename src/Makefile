@@ -19,7 +19,7 @@ all:		chkparse disopred2 diso_neu_net diso_neighb combine svm-predict
 
 install:
 		mkdir ../bin/
-		mv -t ../bin chkparse disopred2 diso_neu_net diso_neighb combine svm-predict
+		mv chkparse disopred2 diso_neu_net diso_neighb combine svm-predict ../bin/
 
 clean:
 		rm -f chkparse disopred2 diso_neu_net diso_neighb combine svm-predict *~

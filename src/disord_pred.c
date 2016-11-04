@@ -193,7 +193,7 @@ void
 	    aacomp[(int)seq[winpos]]++;
     for (aa = 0; aa < 20; aa++)
 	aacomp[aa] /= seqlen;
-    
+
     for (winpos = 0; winpos < seqlen; winpos++)
     {
 	for (j = 0; j < NUM_IN; j++)
@@ -230,6 +230,10 @@ void
 #define CLKRATE 1000000
 #endif
 
+#ifdef __APPLE__
+#define CLKRATE 1000000
+#endif
+
 #ifdef CLK_TCK
 #define CLKRATE (CLK_TCK)
 #endif
@@ -243,7 +247,7 @@ double
 
     temp = clock() & 0x7fffffff;
     if (temp >= last_t)
-	runtime += (double) abs(temp - last_t) / CLKRATE;
+	runtime += (double) temp - last_t / CLKRATE;
     else
 	runtime += (double) (0x7fffffff - last_t + (temp + 1)) / CLKRATE;
     last_t = temp;
@@ -268,16 +272,16 @@ int             getmtx(FILE *lfil)
 {
     int             j, naa;
     char            buf[512];
-    
+
     if (fscanf(lfil, "%d", &naa) != 1)
 	fail("Bad mtx file!");
-    
+
     if (naa > MAXSQLEN)
 	fail("Input sequence too long!");
-    
+
     if (fscanf(lfil, "%s", seq) != 1)
 	fail("Bad mtx file!");
-    
+
     while (!feof(lfil))
     {
 	if (!fgets(buf, 512, lfil))
@@ -293,7 +297,7 @@ int             getmtx(FILE *lfil)
 	    }
 	}
     }
-    
+
     return naa;
 }
 
@@ -353,7 +357,7 @@ int main(int argc, char **argv)
     seqlen = getmtx(ifp);
 
     fclose(ifp);
-    
+
     predict();
 
     return 0;
