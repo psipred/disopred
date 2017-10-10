@@ -52,7 +52,7 @@ my ($hits_file, $chk_file) = map {my $name = join '.', $tmp_base, $_; join '/', 
 print "Running PSI-BLAST search ...\n\n";
 # run psiblast
 #my $args = join ' ', $NCBI_DIR."blastpgp", "-i", $fasta_fn, "-d", $SEQ_DB, $PSIBLAST_PAR, "-C", $chk_file, "-o", $hits_file, "\n";
-my $args = join ' ', $NCBI_DIR."psiblast", "-db", $SEQ_DB, "-query", $fasta_fn, "-inclusion_ethresh", "0.001", "-out_pssm", $chk_file, "-num_iterations", "3", "-num_alignments", "0", ">&", $hits_file
+my $args = join ' ', $NCBI_DIR."psiblast", "-db", $SEQ_DB, "-query", $fasta_fn, "-inclusion_ethresh", "0.001", "-out_pssm", $chk_file, "-num_iterations", "3", "-num_alignments", "0", ">&", $hits_file;
 system($args) == 0 or die "[$0] ERROR: $args failed: $?\n";
 print "Generating PSSM ...\n\n";
 
