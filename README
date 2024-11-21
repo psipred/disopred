@@ -37,6 +37,26 @@ protein binding sites within disordered regions using a SVM that examines patter
 of evolutionary sequence conservation, positional information and amino acid
 composition of putative disordered regions.
 
+INSTALLATION VIA GITHUB AND ANSIBLE
+===================================
+
+First ensure that ansible is installed on your system, then clone the github
+repo
+
+% pip install ansible
+% git clone https://github.com/psipred/disopred.git
+% cd disopred/ansible_installer
+
+Next edit the the config_vars.yml to reflect where you would like disopred and 
+its underlying data to be installed. You can choose a version of uniref but
+we recommend uniref90 for most accurate results.
+
+You can now run ansible as per
+
+% ansible-playbook -i hosts install.yml
+
+You can edit the hosts file to install disopred on one or more machines.
+
 
 Installing DISOPRED3
 ====================

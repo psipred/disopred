@@ -1,0 +1,60 @@
+---
+
+  - name: Check if disopred installed
+    stat: path={{ app_location }}/disopred
+    register: disopred_exist
+
+  - name : Check Out DISOPRED from GIT
+    when: disopred_exist.stat.exists == False
+    git:
+      repo: https://github.com/psipred/disopred.git
+      dest: "{{ app_location }}/disopred"
+      clone: yes
+      force: yes
+
+  - name: Download dso_lib
+    when: disopred_exist.stat.exists == False
+    get_url:
+      url: http://bioinfadmin.cs.ucl.ac.uk/downloads/DISOPRED/dso_lib.tar.gz
+      dest: "{{ app_location }}/disopred/"
+      timeout: 120
+    register: get_url_result
+
+  - name: untar dso_lib
+    when: disopred_exist.stat.exists == False
+    unarchive:
+      src: "{{ app_location }}/disopred/dso_lib.tar.gz"
+      dest: "{{ app_location }}/disopred"
+      remote_src: yes
+
+  - name: remove tar.gz
+    when: disopred_exist.stat.exists == False
+    ansible.builtin.file:
+      state: absent
+      path: "{{ app_location }}/disopred/dso_lib.tar.gz"
+
+  - name: clean disopred components
+    when: disopred_exist.stat.exists == False
+    shell: 'cd {{ app_location }}/disopred/src; make clean'
+
+  - name: make disopred components
+    when: disopred_exist.stat.exists == False
+    shell: 'cd {{ app_location }}/disopred/src; make'
+
+  - name: install disopred components
+    when: disopred_exist.stat.exists == False
+    shell: 'cd {{ app_location }}/disopred/src; make install'
+
+  - name: update blast location
+    # when: disopred_exist.stat.exists == False
+    ansible.builtin.lineinfile:
+      path:  "{{ app_location }}/disopred/run_disopred.pl"
+      regexp: "my .NCBI_DIR ="
+      line: "my $NCBI_DIR = \"{{ app_location }}/blast-2.2.26/bin/\""
+
+  - name: update uniref location
+    # when: disopred_exist.stat.exists == False
+    ansible.builtin.lineinfile:
+      path:  "{{ app_location }}/disopred/run_disopred.pl"
+      regexp: "my .SEQ_DB ="
+      line: "my $SEQ_DB = \"{{ data_location }}/uniref/{{ uniref_db }}.fasta\""
