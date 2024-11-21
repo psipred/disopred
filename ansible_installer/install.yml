@@ -1,4 +1,4 @@
-- name: Install PSIPRED
+- name: Install disopred
   hosts: all
   roles:
     - blast
