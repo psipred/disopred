@@ -50,11 +50,11 @@
     ansible.builtin.lineinfile:
       path:  "{{ app_location }}/disopred/run_disopred.pl"
       regexp: "my .NCBI_DIR ="
-      line: "my $NCBI_DIR = \"{{ app_location }}/blast-2.2.26/bin/\""
+      line: "my $NCBI_DIR = \"{{ app_location }}/blast-2.2.26/bin/\";"
 
   - name: update uniref location
     # when: disopred_exist.stat.exists == False
     ansible.builtin.lineinfile:
       path:  "{{ app_location }}/disopred/run_disopred.pl"
       regexp: "my .SEQ_DB ="
-      line: "my $SEQ_DB = \"{{ data_location }}/uniref/{{ uniref_db }}.fasta\""
+      line: "my $SEQ_DB = \"{{ data_location }}/uniref/{{ uniref_db }}.fasta\";"
